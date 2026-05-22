@@ -1,0 +1,13 @@
+{
+  "name": "com.kpvv.lwcicd",
+  "version": "1.0.0",
+  "displayName": "LW CICD Build Tools",
+  "description": "Lightweight CI/CD for Unity — automated builds on an idle local PC triggered by Plastic SCM check-ins.",
+  "unity": "2021.3",
+  "type": "tool",
+  "keywords": ["cicd", "build", "plasticscm", "automation"],
+  "author": {
+    "name": "kpvv",
+    "email": "kuokpanwong@gmail.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "unity-lwcicd",
+  "version": "1.0.0",
+  "description": "Lightweight CI/CD for Unity — automated builds on an idle local PC triggered by Plastic SCM check-ins.",
+  "main": "webhook.js",
+  "scripts": {
+    "start": "node webhook.js"
+  }
+}
