@@ -3,7 +3,7 @@
 
 **Lightweight CI/CD for Unity — automated builds on an idle local PC triggered by Plastic SCM check-ins.**
 
-When a developer merges to the `/build` branch, Plastic SCM fires a webhook to this server. The server runs `cm update`, kicks off a Unity batchmode build, zips the output, and copies it to Google Drive. No cloud VMs, no Jenkins, no paid services.
+When a developer merges to the `/build` branch, Plastic SCM fires a webhook to this server. The server runs `cm update`, kicks off a Unity batchmode build, zips the output, and copies it to cloud drive. No cloud VMs, no Jenkins, no paid services.
 
 ---
 
@@ -149,7 +149,12 @@ Verify it was created:
 cm tr ls after-checkin --server=YOURORG@cloud
 ```
 
-Note the position number — you'll need it if you ever want to remove it.
+To remove it later, run from the Unity project root:
+```
+Deployment\remove-webhook.bat
+```
+
+`remove-webhook.bat` queries Plastic SCM directly and auto-detects the trigger position — no need to note it down manually.
 
 > **Note — trigger fires on every check-in to the repo, not just `/build`.**
 > Plastic SCM's `--filter` option does not support branch conditions (`AND branch:/build` syntax was tested and breaks the trigger entirely). Branch filtering is handled by `webhook.js` instead: check-ins on other branches receive a `200 Branch not matched` response and no build runs. The only visible side effect is an error popup on the committing client when the build server is offline. This is a known Plastic SCM limitation with no current workaround.
