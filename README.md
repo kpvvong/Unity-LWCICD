@@ -1,4 +1,5 @@
 # Unity-LWCICD
+<img width="1274" height="712" alt="lwcicd_snapshot1" src="https://github.com/user-attachments/assets/b23e5a5e-e722-4c33-a657-46c0dc04d018" />
 
 **Lightweight CI/CD for Unity — automated builds on an idle local PC triggered by Plastic SCM check-ins.**
 
