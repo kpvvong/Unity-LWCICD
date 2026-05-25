@@ -184,7 +184,7 @@ Expected response: `Build triggered`. Watch the Webhook window for build progres
 | `driveFolder` | Local sync folder for any cloud storage (Google Drive, OneDrive, Dropbox, or a symlink). The zip is copied here and synced by the desktop client. Set to `CONFIGURE_ME` to skip upload |
 | `logFile` | Path to the Unity batchmode log file |
 | `debounceMs` | Minimum ms between builds per project (default 1800000 = 30 min) |
-| `executeMethod` | CI entry point — see version strategy below |
+| `executeMethod` | CI entry point — `BuildWindowsCI`, `BuildAndroidCI`, `BuildWebGLCI`, and their `*Increment` variants. See version strategy below |
 
 ---
 
@@ -192,8 +192,12 @@ Expected response: `Build triggered`. Watch the Webhook window for build progres
 
 | Scenario | `executeMethod` | Behaviour |
 |----------|----------------|-----------|
-| Team project | `BuildScript.BuildWindowsCI` (default) | No version increment — developer bumps version manually before merging to `/build` |
-| Solo project | `BuildScript.BuildWindowsCIIncrement` | Patch version auto-increments on every CI build |
+| Team project — Windows | `BuildScript.BuildWindowsCI` (default) | No version increment — developer bumps version manually before merging to `/build` |
+| Solo project — Windows | `BuildScript.BuildWindowsCIIncrement` | Patch version auto-increments on every CI build |
+| Team project — Android | `BuildScript.BuildAndroidCI` | No version increment |
+| Solo project — Android | `BuildScript.BuildAndroidCIIncrement` | Patch version auto-increments on every CI build |
+| Team project — WebGL | `BuildScript.BuildWebGLCI` | No version increment |
+| Solo project — WebGL | `BuildScript.BuildWebGLCIIncrement` | Patch version auto-increments on every CI build |
 
 Manual Editor builds (**Ctrl+Shift+W**) always increment the patch version regardless of this setting.
 

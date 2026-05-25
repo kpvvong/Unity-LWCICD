@@ -213,9 +213,21 @@ public class BuildScript {
         }
     }
 
-    public static void PerformWebGLBuild() {
+    public static void PerformWebGLBuild(bool incrementVersion = false) {
         string productName = PlayerSettings.productName;
         string version = PlayerSettings.bundleVersion;
+
+        if (incrementVersion) {
+            string[] parts = version.Split('.');
+            if (parts.Length != 3) {
+                Debug.LogError("Version must be in format Major.Minor.Patch (e.g., 1.0.0)");
+                EditorApplication.Exit(1);
+                return;
+            }
+            int patch = int.Parse(parts[2]) + 1;
+            version = $"{parts[0]}.{parts[1]}.{patch}";
+            PlayerSettings.bundleVersion = version;
+        }
 
         // Use productName as last segment → Unity names Build/ files after it
         // e.g. Builds/WebGL/0.1.5/MyGame/ → MyGame.loader.js, MyGame.data, etc.
@@ -251,8 +263,8 @@ public class BuildScript {
     }
 
     // ── CI entry points — called by webhook.js via -executeMethod ──────────
-    // Team projects:  set executeMethod = "BuildScript.BuildWindowsCI"
-    // Solo projects:  set executeMethod = "BuildScript.BuildWindowsCIIncrement"
+    // Team projects use the plain variant (no version increment).
+    // Solo projects use the Increment variant (auto-bumps patch on each CI build).
 
     public static void BuildWindowsCI() {
         PerformBuild(BuildTarget.StandaloneWindows64, incrementVersion: false);
@@ -260,6 +272,22 @@ public class BuildScript {
 
     public static void BuildWindowsCIIncrement() {
         PerformBuild(BuildTarget.StandaloneWindows64, incrementVersion: true);
+    }
+
+    public static void BuildAndroidCI() {
+        PerformBuild(BuildTarget.Android, incrementVersion: false);
+    }
+
+    public static void BuildAndroidCIIncrement() {
+        PerformBuild(BuildTarget.Android, incrementVersion: true);
+    }
+
+    public static void BuildWebGLCI() {
+        PerformWebGLBuild(incrementVersion: false);
+    }
+
+    public static void BuildWebGLCIIncrement() {
+        PerformWebGLBuild(incrementVersion: true);
     }
 }
 #endif
